@@ -1,0 +1,11 @@
+---
+features:
+  - dev
+  - gnome
+
+apps:
+  - calibre
+  - spotify
+  - steam
+  - virtualbox
+  - waydroid

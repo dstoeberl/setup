@@ -1,0 +1,12 @@
+---
+- name: setup
+  hosts: localhost
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - import_tasks: tasks/common.yml
+
+    - import_tasks: tasks/common-desktop.yml
+      when: "'gnome' in features"

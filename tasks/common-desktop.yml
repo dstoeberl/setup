@@ -1,0 +1,23 @@
+---
+- name: install common apt packages for all desktops
+  ansible.builtin.apt:
+    pkg:
+      - flatpak
+    state: present
+    update_cache: yes
+  become: true
+
+- name: ensure flathub remote for user
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: ensure flathub remote for system
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: system
+  become: true

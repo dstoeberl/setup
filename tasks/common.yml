@@ -1,0 +1,14 @@
+---
+- name: install common apt packages
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - curl
+      - git
+      - git-credential-oauth
+      - pipx
+      - wget
+    state: present
+    update_cache: yes
+  become: true
+
