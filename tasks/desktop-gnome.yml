@@ -1,0 +1,36 @@
+---
+- name: install gnome-core
+  ansible.builtin.apt:
+    pkg:
+      - gnome-core
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-caffeine
+      - ptyxis
+    state: present
+    update_cache: yes
+  become: true
+
+- name: remove extra gnome
+  ansible.builtin.apt:
+    pkg:
+      - gnome
+      - gnome-terminal
+      - task-gnome-desktop
+    state: absent
+  become: true
+
+- name: autoremove
+  ansible.builtin.apt:
+    autoremove: yes
+  become: true
+
+- name: install flatpak tools
+  community.general.flatpak:
+    name: 
+      - com.mattjakeman.ExtensionManager
+      - net.nokyan.Resources
+      - page.tesk.Refine
+    state: present
+    remote: flathub
+    method: system
+            

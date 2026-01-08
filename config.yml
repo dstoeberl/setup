@@ -2,7 +2,7 @@
 features:
   - dev
   - gnome
-
+  
 apps:
   - calibre
   - spotify

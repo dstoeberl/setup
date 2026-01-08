@@ -1,0 +1,13 @@
+---
+- name: install steam
+  community.general.flatpak:
+    name: com.valvesoftware.Steam
+    state: present
+    method: system
+
+- name: install steam-devices
+  package:
+    name: steam-devices
+    state: present
+
+# TODO download https://github.com/ValveSoftware/steam-devices/raw/refs/heads/master/60-steam-input.rules and put it in /etc/udev/rules.d.
