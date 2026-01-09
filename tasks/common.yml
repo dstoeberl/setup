@@ -1,5 +1,6 @@
 ---
-- name: install common apt packages
+- name: apt install > common packages
+  become: true
   ansible.builtin.apt:
     pkg:
       - build-essential
@@ -10,5 +11,12 @@
       - wget
     state: present
     update_cache: yes
-  become: true
 
+- name: pipx > ensurepath
+  ansible.builtin.command:
+    cmd: 'pipx ensurepath'
+
+- name: pipx > install uv
+  community.general.pipx:
+    name: uv
+    state: present

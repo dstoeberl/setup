@@ -6,6 +6,7 @@
     method: system
 
 - name: install steam-devices
+  become: true
   package:
     name: steam-devices
     state: present

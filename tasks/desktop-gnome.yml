@@ -34,3 +34,5 @@
     remote: flathub
     method: system
             
+
+# TODO configure ptyxis to use a better palette
