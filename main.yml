@@ -14,7 +14,8 @@
     - import_tasks: tasks/desktop-gnome.yml
       when: "'gnome' in features"
 
-
-
     - import_tasks: tasks/app-steam.yml
       when: "'steam' in apps"
+
+    - import_tasks: tasks/workstation.yml
+      when: "'workstation' in features"

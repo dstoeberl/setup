@@ -1,0 +1,8 @@
+---
+- name: install workstation apps from flatpak
+  community.general.flatpak:
+    name: 
+      - com.super_productivity.SuperProductivity
+    state: present
+    remote: flathub
+    method: user

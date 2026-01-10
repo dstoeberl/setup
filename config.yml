@@ -1,11 +1,10 @@
 ---
 features:
-  - dev
   - gnome
+  - workstation
   
 apps:
   - calibre
   - spotify
-  - steam
   - virtualbox
   - waydroid
