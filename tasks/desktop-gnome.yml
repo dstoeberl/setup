@@ -1,28 +1,30 @@
 ---
 - name: install gnome-core
+  become: true
   ansible.builtin.apt:
     pkg:
+      - dconf-editor
       - gnome-core
+      - gnome-keyring
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-caffeine
       - ptyxis
     state: present
     update_cache: yes
-  become: true
 
 - name: remove extra gnome
+  become: true
   ansible.builtin.apt:
     pkg:
       - gnome
       - gnome-terminal
       - task-gnome-desktop
     state: absent
-  become: true
 
 - name: autoremove
+  become: true
   ansible.builtin.apt:
     autoremove: yes
-  become: true
 
 - name: install flatpak tools
   community.general.flatpak:
@@ -33,6 +35,11 @@
     state: present
     remote: flathub
     method: system
-            
+
+- name: configure min/max/close buttons
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: 'appmenu:minimize,maximize,close'
+    state: present
 
 # TODO configure ptyxis to use a better palette
