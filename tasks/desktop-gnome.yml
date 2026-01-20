@@ -39,7 +39,7 @@
 - name: configure min/max/close buttons
   community.general.dconf:
     key: "/org/gnome/desktop/wm/preferences/button-layout"
-    value: 'appmenu:minimize,maximize,close'
+    value: "'appmenu:minimize,maximize,close'"
     state: present
 
 # TODO configure ptyxis to use a better palette
