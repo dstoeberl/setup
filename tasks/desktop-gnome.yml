@@ -17,6 +17,7 @@
   ansible.builtin.apt:
     pkg:
       - gnome
+      - gnome-software
       - gnome-terminal
       - task-gnome-desktop
     state: absent
@@ -30,6 +31,7 @@
   community.general.flatpak:
     name: 
       - com.mattjakeman.ExtensionManager
+      - io.github.kolunmi.Bazaar
       - net.nokyan.Resources
       - page.tesk.Refine
     state: present
