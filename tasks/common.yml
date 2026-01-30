@@ -21,13 +21,13 @@
     name: uv
     state: present
 
-- name: apt install > latest gcm(1)
+- name: apt install > gcm(1)
   ansible.builtin.get_url:
-    url: https://github.com/git-ecosystem/git-credential-manager/releases/latest/download/gcm-linux_amd64.2.6.1.deb
-    dest: /tmp/gcm-latest.deb
+    url: https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.6.1/gcm-linux_amd64.2.6.1.deb
+    dest: /tmp/gcm.deb
 
-- name: apt install > latest gcm(2)
+- name: apt install > gcm(2)
   become: true
   ansible.builtin.apt:
-    deb: /tmp/gcm-latest.deb
+    deb: /tmp/gcm.deb
     state: present
