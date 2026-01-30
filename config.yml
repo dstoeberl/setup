@@ -4,7 +4,4 @@ features:
   - workstation
   
 apps:
-  - calibre
-  - spotify
-  - virtualbox
-  - waydroid
+  - steam
