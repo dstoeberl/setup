@@ -9,7 +9,7 @@
     - import_tasks: tasks/common.yml
 
     - import_tasks: tasks/common-desktop.yml
-      when: "'gnome' in features or 'niri' in features"
+      when: "any(feature in features for feature in ['gnome', 'niri'])"
 
     - import_tasks: tasks/desktop-gnome.yml
       when: "'gnome' in features"

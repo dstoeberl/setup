@@ -2,7 +2,11 @@
 - name: install workstation apps from flatpak
   community.general.flatpak:
     name: 
-      - com.super_productivity.SuperProductivity
+      - com.bitwarden.desktop
+      - com.todoist.Todoist
+      - md.obsidian.Obsidian
+      - net.nokyan.Resources
+      - org.gnome.World.PikaBackup
     state: present
     remote: flathub
     method: user
