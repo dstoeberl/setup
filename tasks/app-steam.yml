@@ -11,4 +11,60 @@
     name: steam-devices
     state: present
 
-# TODO download https://github.com/ValveSoftware/steam-devices/raw/refs/heads/master/60-steam-input.rules and put it in /etc/udev/rules.d.
+# Install Steam udev rule
+# - Downloads upstream rule to a temporary file, checks for changes, and installs and reloads udev if needed
+- name: download Steam udev rule
+  ansible.builtin.get_url:
+    url: "https://github.com/ValveSoftware/steam-devices/raw/refs/heads/master/60-steam-input.rules"
+    dest: "/tmp/60-steam-input.rules"
+    validate_certs: yes
+    force: yes
+    timeout: 60
+  register: steam_rules_download
+
+- name: stat existing Steam udev rule (if present)
+  ansible.builtin.stat:
+    path: "/etc/udev/rules.d/60-steam-input.rules"
+    checksum_algorithm: sha256
+  register: existing_steam_rule_stat
+  ignore_errors: true
+
+- name: stat downloaded Steam udev rule
+  ansible.builtin.stat:
+    path: "/tmp/60-steam-input.rules"
+    checksum_algorithm: sha256
+  register: downloaded_steam_rule_stat
+  when: steam_rules_download is defined and steam_rules_download.dest is defined
+
+- name: decide whether the Steam udev rule differs
+  ansible.builtin.set_fact:
+    steam_rule_different: >-
+      {{ (existing_steam_rule_stat.stat is not defined)
+         or (existing_steam_rule_stat.stat.checksum is not defined)
+         or (existing_steam_rule_stat.stat.checksum != downloaded_steam_rule_stat.stat.checksum) }}
+  when: downloaded_steam_rule_stat is defined
+
+- name: install Steam udev rule (only if different)
+  ansible.builtin.copy:
+    src: "/tmp/60-steam-input.rules"
+    dest: "/etc/udev/rules.d/60-steam-input.rules"
+    owner: root
+    group: root
+    mode: '0644'
+    remote_src: yes
+    backup: yes
+  become: true
+  when: steam_rule_different
+  register: steam_rules_installed
+
+- name: reload udev rules if Steam rule changed
+  ansible.builtin.command:
+    cmd: udevadm control --reload-rules
+  become: true
+  when: (steam_rule_different is defined and steam_rule_different) or (steam_rules_installed is defined and steam_rules_installed.changed)
+
+- name: trigger udev for Steam devices if rule changed
+  ansible.builtin.command:
+    cmd: udevadm trigger --action=add
+  become: true
+  when: (steam_rule_different is defined and steam_rule_different) or (steam_rules_installed is defined and steam_rules_installed.changed)
